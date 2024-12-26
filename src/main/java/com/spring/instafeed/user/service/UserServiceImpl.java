@@ -170,6 +170,22 @@ public class UserServiceImpl implements UserService {
                             newsfeeds.forEach(BaseEntity::markAsDeleted);
                         }
                 );
+
+        // 프로필 삭제 및 그에 연관된 뉴스피드 삭제
+        for (Profile profile : profiles) {
+            // 프로필 삭제
+            profile.markAsDeleted();
+
+            // 팔로워 및 팔로우 관계 삭제
+            followerRepository.deleteAllBySenderProfile_Id(foundUser.getId()); // 사용자가 팔로우한 모든 관계 삭제
+            followerRepository.deleteAllByReceiverProfile_Id(foundUser.getId()); // 사용자를 팔로우한 모든 관계 삭제
+
+            // 프로필에 연관된 뉴스피드 삭제
+            List<Newsfeed> newsfeeds = newsfeedRepository.findAllByProfileIdAndIsDeletedFalse(profile.getId());
+            for (Newsfeed newsfeed : newsfeeds) {
+                newsfeed.markAsDeleted(); // 뉴스피드 삭제
+            }
+        }
     }
 }
         /*
