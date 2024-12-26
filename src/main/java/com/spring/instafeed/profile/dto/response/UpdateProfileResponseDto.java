@@ -9,11 +9,7 @@ public record UpdateProfileResponseDto(
         Long id,
         String nickname,
         String imagePath,
-        String content,
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime createdAt,
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime updatedAt
+        String content
 ) {
 
     /**
@@ -27,9 +23,7 @@ public record UpdateProfileResponseDto(
                 profile.getId(),
                 profile.getNickname(),
                 profile.getImagePath(),
-                profile.getContent(),
-                profile.getCreatedAt(),
-                profile.getUpdatedAt()
+                profile.getContent()
         );
     }
 }

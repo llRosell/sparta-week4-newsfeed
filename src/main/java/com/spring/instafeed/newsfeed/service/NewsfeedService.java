@@ -15,7 +15,7 @@ public interface NewsfeedService {
 
     ContentsWrapperResponseDto readAllNewsfeeds(Pageable pageable);
 
-    ReadNewsfeedResponseDto readNewsfeedById(Long id);
+    ReadNewsfeedResponseDto readNewsfeedById(Long newsfeedId);
 
     UpdateNewsfeedResponseDto updateNewsfeed(
             Long id,

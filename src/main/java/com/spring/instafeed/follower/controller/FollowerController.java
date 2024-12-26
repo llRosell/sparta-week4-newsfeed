@@ -44,20 +44,17 @@ public class FollowerController {
     }
 
     /**
-     * @param request : user 정보를 포함한 HttpServletRequest
      * @param requestDto : 상태를 포함한 UpdateFollowerRequestDto
      * @return UpdateFollowerResponseDto
      */
     @PatchMapping
     public ResponseEntity<UpdateFollowerResponseDto> updateFollower(
-            HttpServletRequest request,
             @RequestBody UpdateFollowerRequestDto requestDto
     ) {
-        Long id = (Long) request.getAttribute("userId");
 
         UpdateFollowerResponseDto responseDto = followerService
                 .updateFollower(
-                        id,
+                        requestDto.followerId(),
                         requestDto.status()
                 );
         return new ResponseEntity<>(responseDto, HttpStatus.OK);

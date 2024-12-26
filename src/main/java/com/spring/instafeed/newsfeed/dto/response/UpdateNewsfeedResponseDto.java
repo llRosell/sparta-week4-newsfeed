@@ -11,9 +11,7 @@ public record UpdateNewsfeedResponseDto(
         String imagePath,
         String content,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime createdAt,
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime updatedAt
+        LocalDateTime createdAt
 ) {
 
     public static UpdateNewsfeedResponseDto toDto(
@@ -24,8 +22,7 @@ public record UpdateNewsfeedResponseDto(
                 newsfeed.getProfile().getNickname(),
                 newsfeed.getImagePath(),
                 newsfeed.getContent(),
-                newsfeed.getCreatedAt(),
-                newsfeed.getUpdatedAt()
+                newsfeed.getCreatedAt()
         );
     }
 }

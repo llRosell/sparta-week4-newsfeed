@@ -1,11 +1,13 @@
 package com.spring.instafeed.newsfeed.controller;
 
 import com.spring.instafeed.newsfeed.dto.request.CreateNewsfeedRequestDto;
+import com.spring.instafeed.newsfeed.dto.request.DeleteNewsfeedRequestDto;
 import com.spring.instafeed.newsfeed.dto.request.UpdateNewsfeedRequestDto;
-import com.spring.instafeed.newsfeed.dto.response.*;
 import com.spring.instafeed.newsfeed.dto.response.ContentsWrapperResponseDto;
+import com.spring.instafeed.newsfeed.dto.response.CreateNewsfeedResponseDto;
+import com.spring.instafeed.newsfeed.dto.response.ReadNewsfeedResponseDto;
+import com.spring.instafeed.newsfeed.dto.response.UpdateNewsfeedResponseDto;
 import com.spring.instafeed.newsfeed.service.NewsfeedServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -57,47 +59,42 @@ public class NewsfeedController {
         page = Math.max(page - 1, 0); // 1부터 시작하는 페이지 번호를 0부터 시작하도록 조정
         Pageable pageable = PageRequest.of(page, size);
 
-        ContentsWrapperResponseDto responseDto = newsfeedService.readAllNewsfeeds(pageable);
+        ContentsWrapperResponseDto responseDto = newsfeedService
+                .readAllNewsfeeds(pageable);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     /**
-     * 기능
-     * 게시물 단건 조회
+     * 뉴스피드 단건 조회
+     * JWT에서 사용자 정보를 추출하고, 주어진 뉴스피드 ID를 기반으로 단건 조회를 수행.
      *
-     * @param request : 조회할 게시물의 user 정보를 포함한 HttpServletRequest
-     * @return NewsfeedCommonResponseDto 게시물 정보를 반환하는 공통 DTO
+     * @param newsfeedId : 조회할 뉴스피드 ID
+     * @return 조회된 뉴스피드 정보를 담은 Response DTO
      */
-//    @GetMapping
-//    public ResponseEntity<ReadNewsfeedResponseDto> readNewsfeedById(
-//            HttpServletRequest request
-//    ) {
-//        Long id = (Long) request.getAttribute("userId");
-//
-//        ReadNewsfeedResponseDto responseDto = newsfeedService
-//                .readNewsfeedById(id);
-//
-//        return new ResponseEntity<>(responseDto, HttpStatus.OK);
-//    }
+    @GetMapping("/{newsfeedId}")
+    public ResponseEntity<ReadNewsfeedResponseDto> readNewsfeedById(
+            @PathVariable Long newsfeedId
+    ) {
+        ReadNewsfeedResponseDto responseDto = newsfeedService
+                .readNewsfeedById(newsfeedId);
+
+        return ResponseEntity.ok(responseDto);
+    }
 
     /**
      * 기능
      * 게시물 내용 수정
      *
-     * @param request : 수정할 게시물의 user 정보를 포함한 HttpServletRequest
      * @param requestDto : 게시물 수정 요청 정보를 담고 있는 DTO
      * @return NewsfeedCommonResponseDto 게시물 정보 반환 DTO
      */
     @PatchMapping
     public ResponseEntity<UpdateNewsfeedResponseDto> updateNewsfeed(
-            HttpServletRequest request,
             @RequestBody UpdateNewsfeedRequestDto requestDto
     ) {
-        Long id = (Long) request.getAttribute("userId");
-
         UpdateNewsfeedResponseDto responseDto = newsfeedService
                 .updateNewsfeed(
-                        id,
+                        requestDto.newsfeedId(),
                         requestDto.content()
                 );
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
@@ -107,16 +104,14 @@ public class NewsfeedController {
      * 기능
      * 게시물 단건 삭제
      *
-     * @param request : 삭제하려는 게시물의 식별자
      * @return 상태 코드 메시지(200 OK)만 반환
      */
     @DeleteMapping
     public ResponseEntity<Void> deleteNewsfeed(
-            HttpServletRequest request
+            @RequestBody DeleteNewsfeedRequestDto requestDto
     ) {
-        Long id = (Long) request.getAttribute("userId");
 
-        newsfeedService.deleteNewsfeed(id);
+        newsfeedService.deleteNewsfeed(requestDto.newsfeedId());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

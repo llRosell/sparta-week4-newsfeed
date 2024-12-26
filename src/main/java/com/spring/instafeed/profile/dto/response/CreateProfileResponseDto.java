@@ -10,9 +10,7 @@ public record CreateProfileResponseDto(
         Long userId,
         String nickname,
         String imagePath,
-        String content,
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime createdAt
+        String content
 ) {
     /**
      * Profile 객체를 CreateProfileResponseDto 로 변환하는 static 메서드
@@ -26,8 +24,7 @@ public record CreateProfileResponseDto(
                 profile.getUser().getId(),
                 profile.getNickname(),
                 profile.getImagePath(),
-                profile.getContent(),
-                profile.getCreatedAt()
+                profile.getContent()
         );
     }
 }
