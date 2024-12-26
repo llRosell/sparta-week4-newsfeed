@@ -102,25 +102,25 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     /**
-     * ID로 프로필을 조회합니다.
+     * 사용자 ID와 프로필 ID로 단건 프로필 조회
      *
-     * @param id : 조회하려는 프로필의 식별자
+     * @param userId    : JWT 인증된 사용자 ID
+     * @param profileId : 조회하려는 프로필의 ID
      * @return 조회된 프로필에 대한 응답 데이터
-     * @throws ResponseStatusException 프로필이 존재하지 않으면 예외 발생
+     * @throws ResponseStatusException 프로필이 존재하지 않거나 접근 권한이 없는 경우 예외 발생
      */
     @Override
-    public ReadProfileResponseDto readProfileById(Long id) {
+    public ReadProfileResponseDto readProfileById(Long userId, Long profileId) {
+        // 사용자 ID와 프로필 ID를 기반으로 데이터 조회
         Profile foundProfile = profileRepository
-                .findByIdAndIsDeletedFalse(id)
-                .orElseThrow(
-                        () -> new DataNotFoundException(
-                                HttpStatus.NOT_FOUND,
-                                "Id does not exist"
-                        )
-                );
+                .findByIdAndUserIdAndIsDeletedFalse(profileId, userId)
+                .orElseThrow(() -> new DataNotFoundException(
+                        HttpStatus.NOT_FOUND,
+                        "Profile not found for the given user ID and profile ID"
+                ));
+
         return ReadProfileResponseDto.toDto(foundProfile);
     }
-
 
     @Transactional
     @Override

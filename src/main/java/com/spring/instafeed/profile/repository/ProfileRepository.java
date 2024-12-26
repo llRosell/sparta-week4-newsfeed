@@ -29,4 +29,6 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
      */
     List<Profile> findAllByUserIdAndIsDeletedFalse(Long userId);
 
+    Optional<Profile> findByIdAndUserIdAndIsDeletedFalse(Long profileId, Long userId);
+
 }

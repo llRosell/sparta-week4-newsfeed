@@ -21,7 +21,7 @@ public interface ProfileService {
      */
     List<ReadProfileResponseDto> readAllProfiles();
 
-    ReadProfileResponseDto readProfileById(Long id);
+    ReadProfileResponseDto readProfileById(Long userId, Long profileId);
 
     UpdateProfileResponseDto updateProfile(
             Long id,
