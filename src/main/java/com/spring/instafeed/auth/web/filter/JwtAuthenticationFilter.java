@@ -1,13 +1,15 @@
 package com.spring.instafeed.auth.web.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.instafeed.auth.domain.TokenProvider;
-import com.spring.instafeed.exception.invalid.InvalidTokenException;
+import com.spring.instafeed.auth.dto.response.ExceptionResponseDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -25,11 +27,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // 토큰의 유효성 검사
         if (token == null || !tokenProvider.validateToken(token)) {
-            throw new InvalidTokenException(HttpStatus.UNAUTHORIZED, "Invalid or missing token");
+            handleTokenExceptionResponse(response);
+            return;
         }
 
         Long userId = tokenProvider.getUserId(token);
-
         request.setAttribute("userId", userId);
 
         filterChain.doFilter(request, response);
@@ -61,5 +63,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         return null;
+    }
+
+    private void handleTokenExceptionResponse(HttpServletResponse response) throws IOException {
+        ExceptionResponseDto errorResponse = new ExceptionResponseDto(HttpServletResponse.SC_UNAUTHORIZED, HttpStatus.UNAUTHORIZED, "Invalid or missing token");
+        ObjectMapper mapper = new ObjectMapper();
+
+        response.setStatus(errorResponse.status().value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.getWriter().write(mapper.writeValueAsString(errorResponse));
     }
 }

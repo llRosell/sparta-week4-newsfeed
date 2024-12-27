@@ -2,15 +2,12 @@ package com.spring.instafeed.profile.dto.response;
 
 import com.spring.instafeed.profile.entity.Profile;
 
-import java.time.LocalDateTime;
-
 public record CreateProfileResponseDto(
         Long id,
         Long userId,
         String nickname,
         String imagePath,
-        String content,
-        LocalDateTime createdAt
+        String content
 ) {
     /**
      * Profile 객체를 CreateProfileResponseDto 로 변환하는 static 메서드
@@ -24,8 +21,7 @@ public record CreateProfileResponseDto(
                 profile.getUser().getId(),
                 profile.getNickname(),
                 profile.getImagePath(),
-                profile.getContent(),
-                profile.getCreatedAt()
+                profile.getContent()
         );
     }
 }

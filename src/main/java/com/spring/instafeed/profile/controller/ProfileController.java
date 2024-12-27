@@ -1,7 +1,6 @@
 package com.spring.instafeed.profile.controller;
 
-import com.spring.instafeed.profile.dto.request.CreateProfileRequestDto;
-import com.spring.instafeed.profile.dto.request.UpdateProfileRequestDto;
+import com.spring.instafeed.profile.dto.request.*;
 import com.spring.instafeed.profile.dto.response.*;
 import com.spring.instafeed.profile.service.ProfileServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,42 +59,42 @@ public class ProfileController {
 
     /**
      * 프로필 단건 조회
-     * 프로필 ID를 바탕으로 특정 프로필을 조회하는 엔드포인트.
-     * 주어진 ID에 해당하는 프로필 정보를 반환한다.
+     * 주어진 프로필 ID를 바탕으로 특정 프로필을 조회하는 엔드포인트.
      *
-     * @param request : 조회할 프로필의 user 정보를 포함한 HttpServletRequest
+     * @param request   : JWT 인증 정보를 포함한 HttpServletRequest
+     * @param profileId : 조회할 프로필의 ID
      * @return 조회된 프로필 정보를 담은 Response DTO
      */
-//    @GetMapping
-//    public ResponseEntity<ReadProfileResponseDto> readProfileById(
-//            HttpServletRequest request
-//    ) {
-//        Long id = (Long) request.getAttribute("userId");
-//
-//        ReadProfileResponseDto profile = profileService
-//                .readProfileById(id);
-//
-//        return new ResponseEntity<>(profile, HttpStatus.OK);
-//    }
+    @GetMapping("/{profileId}")
+    public ResponseEntity<ReadProfileResponseDto> readProfileById(
+            HttpServletRequest request,
+            @PathVariable("profileId") Long profileId
+    ) {
+        // JWT에서 사용자 ID 추출
+        Long userId = (Long) request.getAttribute("userId");
+
+        // 서비스에서 프로필 정보 조회
+        ReadProfileResponseDto profile = profileService
+                .readProfileById(userId, profileId);
+
+        return ResponseEntity.ok(profile);
+    }
 
     /**
      * 기능
      * 프로필 전체 수정
      *
-     * @param request : user 정보를 포함한 HttpServletRequest
      * @param requestDto : 수정할 프로필 정보를 담은 요청 DTO
      * @return 수정된 프로필 정보를 담은 응답 DTO
      */
     @PutMapping
     public ResponseEntity<UpdateProfileResponseDto> updateProfile(
-            HttpServletRequest request,
             @RequestBody UpdateProfileRequestDto requestDto
     ) {
-        Long id = (Long) request.getAttribute("userId");
 
         UpdateProfileResponseDto responseDto = profileService
                 .updateProfile(
-                        id,
+                        requestDto.profileId(),
                         requestDto.nickname(),
                         requestDto.content(),
                         requestDto.imagePath()
@@ -107,16 +106,13 @@ public class ProfileController {
      * 프로필 삭제
      * 특정 프로필을 논리적으로 삭제하는 엔드포인트입니다.
      *
-     * @param request : 삭제할 프로필의 user 정보를 포함한 HttpServletRequest
      * @return 삭제된 프로필 정보
      */
     @DeleteMapping
     public ResponseEntity<Void> deleteProfile(
-            HttpServletRequest request
+            @RequestBody DeleteProfileRequestDto requestDto
     ) {
-        Long id = (Long) request.getAttribute("userId");
-
-        profileService.deleteProfile(id);
+        profileService.deleteProfile(requestDto.profileId());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

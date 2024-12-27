@@ -1,9 +1,11 @@
 package com.spring.instafeed.newsfeed.service;
 
-import com.spring.instafeed.exception.data.DataNotFoundException;
 import com.spring.instafeed.exception.data.DataAlreadyDeletedException;
-import com.spring.instafeed.newsfeed.dto.response.*;
+import com.spring.instafeed.exception.data.DataNotFoundException;
 import com.spring.instafeed.newsfeed.dto.response.ContentsWrapperResponseDto;
+import com.spring.instafeed.newsfeed.dto.response.CreateNewsfeedResponseDto;
+import com.spring.instafeed.newsfeed.dto.response.ReadNewsfeedResponseDto;
+import com.spring.instafeed.newsfeed.dto.response.UpdateNewsfeedResponseDto;
 import com.spring.instafeed.newsfeed.entity.Newsfeed;
 import com.spring.instafeed.newsfeed.repository.NewsfeedRepository;
 import com.spring.instafeed.profile.entity.Profile;
@@ -14,9 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -102,21 +102,25 @@ public class NewsfeedServiceImpl implements NewsfeedService {
 
     /**
      * 기능
-     * 게시물 단건 조회
+     * 특정 뉴스피드를 ID로 조회하는 메서드입니다.
      *
-     * @param id : 조회하려는 게시물의 식별자
-     * @return ReadNewsfeedResponseDto
+     * 이 메서드는 주어진 뉴스피드 ID를 사용하여 삭제되지 않은 뉴스피드를 조회합니다.
+     * 뉴스피드가 존재하지 않거나 삭제된 경우, 예외를 발생시킵니다.
+     *
+     * @param newsfeedId 조회할 뉴스피드의 ID
+     * @return ReadNewsfeedResponseDto 요청된 뉴스피드의 세부 정보를 담고 있는 DTO
+     * @throws DataNotFoundException 뉴스피드가 존재하지 않거나 삭제된 경우
      */
     @Override
-    public ReadNewsfeedResponseDto readNewsfeedById(Long id) {
+    public ReadNewsfeedResponseDto readNewsfeedById(Long newsfeedId) {
+        // 뉴스피드 조회
         Newsfeed foundNewsfeed = newsfeedRepository
-                .findByIdAndIsDeletedFalse(id)
-                .orElseThrow(
-                        () -> new DataNotFoundException(
-                                HttpStatus.NOT_FOUND,
-                                "Id does not exist"
-                        )
-                );
+                .findByIdAndIsDeletedFalse(newsfeedId)
+                .orElseThrow(() -> new DataNotFoundException(
+                        HttpStatus.NOT_FOUND, // HTTP 상태 코드 404 반환
+                        "Id does not exist" // 에러 메시지
+                ));
+        // DTO 변환 및 반환
         return ReadNewsfeedResponseDto.toDto(foundNewsfeed);
     }
 

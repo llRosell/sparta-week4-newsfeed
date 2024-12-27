@@ -1,5 +1,6 @@
 package com.spring.instafeed.newsfeed.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.spring.instafeed.newsfeed.entity.Newsfeed;
 
 import java.time.LocalDateTime;
@@ -9,18 +10,19 @@ public record UpdateNewsfeedResponseDto(
         String nickname,
         String imagePath,
         String content,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        LocalDateTime createdAt
 ) {
 
-    public static UpdateNewsfeedResponseDto toDto(Newsfeed newsfeed) {
+    public static UpdateNewsfeedResponseDto toDto(
+            Newsfeed newsfeed
+    ) {
         return new UpdateNewsfeedResponseDto(
                 newsfeed.getId(),
                 newsfeed.getProfile().getNickname(),
                 newsfeed.getImagePath(),
                 newsfeed.getContent(),
-                newsfeed.getCreatedAt(),
-                newsfeed.getUpdatedAt()
+                newsfeed.getCreatedAt()
         );
     }
 }

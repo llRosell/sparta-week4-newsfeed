@@ -2,15 +2,11 @@ package com.spring.instafeed.profile.dto.response;
 
 import com.spring.instafeed.profile.entity.Profile;
 
-import java.time.LocalDateTime;
-
 public record UpdateProfileResponseDto(
         Long id,
         String nickname,
         String imagePath,
-        String content,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        String content
 ) {
 
     /**
@@ -24,9 +20,7 @@ public record UpdateProfileResponseDto(
                 profile.getId(),
                 profile.getNickname(),
                 profile.getImagePath(),
-                profile.getContent(),
-                profile.getCreatedAt(),
-                profile.getUpdatedAt()
+                profile.getContent()
         );
     }
 }

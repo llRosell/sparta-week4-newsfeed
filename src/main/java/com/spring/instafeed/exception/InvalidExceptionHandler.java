@@ -3,8 +3,6 @@ package com.spring.instafeed.exception;
 import com.spring.instafeed.exception.invalid.InvalidEmailException;
 import com.spring.instafeed.exception.invalid.InvalidFollowRequestException;
 import com.spring.instafeed.exception.invalid.InvalidPasswordException;
-import com.spring.instafeed.exception.invalid.InvalidTokenException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -51,20 +49,6 @@ public class InvalidExceptionHandler {
      */
     @ExceptionHandler(InvalidPasswordException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidPasswordException(InvalidPasswordException ex) {
-        return ResponseEntity
-                .status(ex.getStatus())
-                .body(ex.createExceptionResponseBody(ex));
-    }
-
-    /**
-     * 토큰 검증을 실패한 경우
-     * @param ex : InvalidTokenException
-     * @return : Map<String, Object>
-     *          - "status": HTTP 상태 코드 (HttpStatus)
-     *          - "message": 에러 메세지 (String)
-     */
-    @ExceptionHandler(InvalidTokenException.class)
-    public ResponseEntity<Map<String, Object>> handleDataNotFoundException(InvalidTokenException ex) {
         return ResponseEntity
                 .status(ex.getStatus())
                 .body(ex.createExceptionResponseBody(ex));
