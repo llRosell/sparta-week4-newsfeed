@@ -1,9 +1,7 @@
 package com.spring.instafeed.user.controller;
 
-import com.spring.instafeed.user.dto.request.DeleteUserRequestDto;
-import com.spring.instafeed.user.dto.request.UpdateUserRequestDto;
-import com.spring.instafeed.user.dto.response.UpdateUserResponseDto;
-import com.spring.instafeed.user.dto.response.ReadUserResponseDto;
+import com.spring.instafeed.user.dto.request.*;
+import com.spring.instafeed.user.dto.response.*;
 import com.spring.instafeed.user.service.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

@@ -1,12 +1,14 @@
 package com.spring.instafeed.profile.service;
 
 import com.spring.instafeed.common.BaseEntity;
-import com.spring.instafeed.exception.data.DataNotFoundException;
 import com.spring.instafeed.exception.data.DataAlreadyDeletedException;
 import com.spring.instafeed.exception.data.DataAlreadyExistsException;
+import com.spring.instafeed.exception.data.DataNotFoundException;
 import com.spring.instafeed.newsfeed.entity.Newsfeed;
 import com.spring.instafeed.newsfeed.repository.NewsfeedRepository;
-import com.spring.instafeed.profile.dto.response.*;
+import com.spring.instafeed.profile.dto.response.CreateProfileResponseDto;
+import com.spring.instafeed.profile.dto.response.ReadProfileResponseDto;
+import com.spring.instafeed.profile.dto.response.UpdateProfileResponseDto;
 import com.spring.instafeed.profile.entity.Profile;
 import com.spring.instafeed.profile.repository.ProfileRepository;
 import com.spring.instafeed.user.entity.User;
@@ -19,7 +21,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)

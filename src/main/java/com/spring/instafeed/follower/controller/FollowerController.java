@@ -1,10 +1,12 @@
 package com.spring.instafeed.follower.controller;
 
 
-import com.spring.instafeed.follower.dto.request.*;
-import com.spring.instafeed.follower.dto.response.*;
+import com.spring.instafeed.follower.dto.request.CreateFollowerRequestDto;
+import com.spring.instafeed.follower.dto.request.UpdateFollowerRequestDto;
+import com.spring.instafeed.follower.dto.response.CreateFollowerResponseDto;
+import com.spring.instafeed.follower.dto.response.ReadFollowerResponseDto;
+import com.spring.instafeed.follower.dto.response.UpdateFollowerResponseDto;
 import com.spring.instafeed.follower.service.FollowerServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

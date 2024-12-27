@@ -1,12 +1,7 @@
 package com.spring.instafeed.newsfeed.controller;
 
-import com.spring.instafeed.newsfeed.dto.request.CreateNewsfeedRequestDto;
-import com.spring.instafeed.newsfeed.dto.request.DeleteNewsfeedRequestDto;
-import com.spring.instafeed.newsfeed.dto.request.UpdateNewsfeedRequestDto;
-import com.spring.instafeed.newsfeed.dto.response.ContentsWrapperResponseDto;
-import com.spring.instafeed.newsfeed.dto.response.CreateNewsfeedResponseDto;
-import com.spring.instafeed.newsfeed.dto.response.ReadNewsfeedResponseDto;
-import com.spring.instafeed.newsfeed.dto.response.UpdateNewsfeedResponseDto;
+import com.spring.instafeed.newsfeed.dto.request.*;
+import com.spring.instafeed.newsfeed.dto.response.*;
 import com.spring.instafeed.newsfeed.service.NewsfeedServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

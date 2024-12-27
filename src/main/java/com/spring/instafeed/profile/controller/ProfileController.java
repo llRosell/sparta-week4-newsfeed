@@ -1,11 +1,7 @@
 package com.spring.instafeed.profile.controller;
 
-import com.spring.instafeed.profile.dto.request.CreateProfileRequestDto;
-import com.spring.instafeed.profile.dto.request.DeleteProfileRequestDto;
-import com.spring.instafeed.profile.dto.request.UpdateProfileRequestDto;
-import com.spring.instafeed.profile.dto.response.CreateProfileResponseDto;
-import com.spring.instafeed.profile.dto.response.ReadProfileResponseDto;
-import com.spring.instafeed.profile.dto.response.UpdateProfileResponseDto;
+import com.spring.instafeed.profile.dto.request.*;
+import com.spring.instafeed.profile.dto.response.*;
 import com.spring.instafeed.profile.service.ProfileServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

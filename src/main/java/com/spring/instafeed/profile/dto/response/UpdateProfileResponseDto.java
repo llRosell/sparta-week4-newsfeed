@@ -1,9 +1,6 @@
 package com.spring.instafeed.profile.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.spring.instafeed.profile.entity.Profile;
-
-import java.time.LocalDateTime;
 
 public record UpdateProfileResponseDto(
         Long id,

@@ -1,9 +1,11 @@
 package com.spring.instafeed.newsfeed.service;
 
-import com.spring.instafeed.exception.data.DataNotFoundException;
 import com.spring.instafeed.exception.data.DataAlreadyDeletedException;
-import com.spring.instafeed.newsfeed.dto.response.*;
+import com.spring.instafeed.exception.data.DataNotFoundException;
 import com.spring.instafeed.newsfeed.dto.response.ContentsWrapperResponseDto;
+import com.spring.instafeed.newsfeed.dto.response.CreateNewsfeedResponseDto;
+import com.spring.instafeed.newsfeed.dto.response.ReadNewsfeedResponseDto;
+import com.spring.instafeed.newsfeed.dto.response.UpdateNewsfeedResponseDto;
 import com.spring.instafeed.newsfeed.entity.Newsfeed;
 import com.spring.instafeed.newsfeed.repository.NewsfeedRepository;
 import com.spring.instafeed.profile.entity.Profile;
@@ -14,9 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
